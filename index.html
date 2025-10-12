@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>面之韵 | 探索全球面条美食</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #d4a574;
+            --primary-dark: #b88a5f;
+            --secondary: #8c6d46;
+            --light: #f8f5f0;
+            --dark: #3a3226;
+            --accent: #e63946;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* 导航栏 */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 18px;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--dark);
+            cursor: pointer;
+        }
+        
+        /* 英雄区域 */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 18px;
+            transition: var(--transition);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn:hover {
+            background-color: transparent;
+            color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            margin-left: 15px;
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* 关于面条 */
+        .section {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.8rem;
+            color: var(--primary-dark);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .about-image {
+            flex: 1;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--transition);
+        }
+        
+        .about-image img:hover {
+            transform: scale(1.05);
+        }
+        
+        /* 面条种类 */
+        .noodle-types {
+            background-color: #f0e9e1;
+        }
+        
+        .types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .type-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        .type-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .type-image {
+            height: 220px;
+            overflow: hidden;
+        }
+        
+        .type-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .type-card:hover .type-image img {
+            transform: scale(1.1);
+        }
+        
+        .type-content {
+            padding: 25px;
+        }
+        
+        .type-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+        
+        .type-content p {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        /* 制作工艺 */
+        .process {
+            position: relative;
+        }
+        
+        .process::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+            z-index: 1;
+        }
+        
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step {
+            display: flex;
+            margin-bottom: 60px;
+            width: 100%;
+        }
+        
+        .step:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .step-content {
+            flex: 1;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin: 0 40px;
+        }
+        
+        .step:nth-child(odd) .step-content {
+            margin-right: 80px;
+        }
+        
+        .step:nth-child(even) .step-content {
+            margin-left: 80px;
+        }
+        
+        .step-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            position: absolute;
+            top: 30px;
+            z-index: 3;
+        }
+        
+        .step:nth-child(odd) .step-number {
+            right: -30px;
+        }
+        
+        .step:nth-child(even) .step-number {
+            left: -30px;
+        }
+        
+        /* 联系我们 */
+        .contact {
+            background: linear-gradient(rgba(140, 109, 70, 0.9), rgba(140, 109, 70, 0.9)), url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+        }
+        
+        .contact .section-title h2 {
+            color: white;
+        }
+        
+        .contact .section-title h2::after {
+            background-color: white;
+        }
+        
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            font-family: 'Noto Sans SC', sans-serif;
+            font-size: 16px;
+        }
+        
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-column p, .footer-column a {
+            color: #ccc;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-column a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .step-content {
+                margin: 0 20px !important;
+            }
+            
+            .step:nth-child(odd) .step-content,
+            .step:nth-child(even) .step-content {
+                margin: 0 20px !important;
+            }
+            
+            .step-number {
+                top: 20px;
+            }
+            
+            .step:nth-child(odd) .step-number {
+                right: -20px;
+            }
+            
+            .step:nth-child(even) .step-number {
+                left: -20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                flex-direction: column;
+                background: white;
+                width: 80%;
+                height: calc(100vh - 80px);
+                padding: 40px 0;
+                transition: var(--transition);
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-links li {
+                margin: 15px 0;
+                text-align: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .btn {
+                display: block;
+                margin: 10px auto;
+                width: 80%;
+                max-width: 300px;
+            }
+            
+            .btn-outline {
+                margin-left: 0;
+            }
+            
+            .process::before {
+                left: 30px;
+            }
+            
+            .step {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+            }
+            
+            .step-content {
+                margin: 40px 0 0 60px !important;
+                width: calc(100% - 60px);
+            }
+            
+            .step-number {
+                position: relative;
+                top: 0;
+                left: -30px !important;
+                right: auto !important;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+            
+            .about-text h3, .type-content h3, .step-content h3 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">面<span>之韵</span></a>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#about">关于面条</a></li>
+                    <li><a href="#types">面条种类</a></li>
+                    <li><a href="#process">制作工艺</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>探索面条的千年韵味</h1>
+            <p>从东方到西方，从古至今，面条承载着人类文明的味觉记忆</p>
+            <a href="#types" class="btn">探索种类</a>
+            <a href="#process" class="btn btn-outline">了解工艺</a>
+        </div>
+    </section>
+
+    <!-- 关于面条 -->
+    <section class="section" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>面条的历史与文化</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>跨越千年的美食传承</h3>
+                    <p>面条的历史可以追溯到4000多年前的中国，考古学家在青海喇家遗址发现了距今约4000年的面条实物，这是目前世界上最早的面条遗存。</p>
+                    <p>随着时间的推移，面条沿着丝绸之路传播到世界各地，演化出丰富多样的形态和风味。从意大利的意面到日本的拉面，从中国的兰州拉面到越南的河粉，每一种面条都承载着当地的文化与智慧。</p>
+                    <p>面条不仅是一种食物，更是一种文化符号。在中国，长寿面象征着健康长寿；在意大利，家庭聚餐时共享意面代表着亲情与团聚；在日本，一碗热腾腾的拉面则是疲惫一天后的最佳慰藉。</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1563245372-f348c1b9e522?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="传统手工面条">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 面条种类 -->
+    <section class="section noodle-types" id="types">
+        <div class="container">
+            <div class="section-title">
+                <h2>全球面条种类</h2>
+            </div>
+            <div class="types-grid">
+                <div class="type-card">
+                    <div class="type-image">
+                        <img src="https://images.unsplash.com/photo-1606755962773-d324e0a13086?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="兰州拉面">
+                    </div>
+                    <div class="type-content">
+                        <h3>兰州拉面</h3>
+                        <p>中国西北地区的传统面食，以"一清二白三红四绿五黄"著称。汤清、萝卜白、辣椒油红、香菜蒜苗绿、面条黄亮，口感筋道，汤鲜味美。</p>
+                    </div>
+                </div>
+                <div class="type-card">
+                    <div class="type-image">
+                        <img src="https://images.unsplash.com/photo-1576813826590-4a5a7e3e0b9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="意大利面">
+                    </div>
+                    <div class="type-content">
+                        <h3>意大利面</h3>
+                        <p>源自意大利的经典面食，种类繁多，包括长条形的Spaghetti、管状的Penne、蝴蝶结形的Farfalle等。通常搭配番茄酱、奶油酱或橄榄油食用。</p>
+                    </div>
+                </div>
+                <div class="type-card">
+                    <div class="type-image">
+                        <img src="https://images.unsplash.com/photo-1603532648951-a9a7f3f3a9a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="日本拉面">
+                    </div>
+                    <div class="type-content">
+                        <h3>日本拉面</h3>
+                        <p>日本国民美食，汤底通常分为酱油、味噌、盐味和豚骨四种。面条有粗细软硬之分，搭配叉烧、溏心蛋、海苔等配料，风味独特。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 制作工艺 -->
+    <section class="section" id="process">
+        <div class="container">
+            <div class="section-title">
+                <h2>传统面条制作工艺</h2>
+            </div>
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>精选原料</h3>
+                        <p>优质高筋小麦粉是制作好面条的基础。传统工艺中，还会根据季节和气候调整面粉的配比，确保面条的口感和韧性。</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>和面醒面</h3>
+                        <p>将面粉与水（有时加入盐或碱水）混合揉成面团，然后静置醒发。这个过程让面筋充分形成，使面条更加筋道有弹性。</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>擀面切面</h3>
+                        <p>将醒好的面团反复擀压至均匀厚度，然后切成所需粗细的面条。手工切面能保留面团的原始风味和口感。</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>煮制享用</h3>
+                        <p>在沸水中煮制面条，时间根据粗细调整。煮好的面条迅速过凉水（或不过水），搭配精心调制的汤底或酱料，成就一碗美味。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>分享您的面条故事</h2>
+            </div>
+            <div class="contact-form">
+                <form>
+                    <div class="form-group">
+                        <label for="name">姓名</label>
+                        <input type="text" id="name" placeholder="请输入您的姓名">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">邮箱</label>
+                        <input type="email" id="email" placeholder="请输入您的邮箱">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">您的故事</label>
+                        <textarea id="message" placeholder="分享您与面条的难忘经历..."></textarea>
+                    </div>
+                    <button type="submit" class="btn">提交故事</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>面之韵</h3>
+                    <p>探索全球面条文化，传承千年美食智慧</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>快速链接</h3>
+                    <a href="#home">首页</a>
+                    <a href="#about">关于面条</a>
+                    <a href="#types">面条种类</a>
+                    <a href="#process">制作工艺</a>
+                </div>
+                <div class="footer-column">
+                    <h3>面条小知识</h3>
+                    <a href="#">如何煮出完美的意大利面</a>
+                    <a href="#">拉面汤底的秘密</a>
+                    <a href="#">面条的营养价值</a>
+                    <a href="#">全球面条节</a>
+                </div>
+                <div class="footer-column">
+                    <h3>联系我们</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 中国·北京</p>
+                    <p><i class="fas fa-envelope"></i> info@mianzhiyun.com</p>
+                    <p><i class="fas fa-phone"></i> +86 10 1234 5678</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 面之韵. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 移动菜单切换
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                navLinks.classList.remove('active');
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // 窗口滚动时隐藏移动菜单
+        window.addEventListener('scroll', () => {
+            if (navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
